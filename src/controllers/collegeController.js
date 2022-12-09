@@ -2,7 +2,8 @@ const internModel = require("../models/internModel")
 const collegeModel = require("../models/collegeModels")
 
 
-const createCollege = async (req, res) => {
+const createCollege = async function(req, res) {
+  res.setHeader('Access-Control-Allow-Origin','*')
   try {
     let data = req.body;
 
@@ -15,7 +16,7 @@ const createCollege = async (req, res) => {
     if (!validName.test(name)) return res.status(400).send({ status: false, message: "Invalid name." })
 
     let check = await collegeModel.findOne({name:name})
-    if(check){return res.status(400).send({ status: false, message: "college is already prasent." })}
+    if(check){return res.status(400).send({ status: false, message: "college is already present." })}
 
     if (!fullName) return res.status(400).send({ status: false, message: "please provide fullname" })
 
@@ -43,13 +44,14 @@ const createCollege = async (req, res) => {
 
 
 const getInterns = async function (req,res){
+  res.setHeader('Access-Control-Allow-Origin','*')
     try{
-    let fillters = req.query
     
-    const collegeName=fillters.collegeName
+    
+    const collegeName = req.query.collegeName
 
     
-    if(!collegeName){return res.status(400).send({status:false,message:"cannot provide empty querry"})}
+    if(!collegeName){return res.status(400).send({status:false,message:"cannot provide empty query"})}
     let colLege= await collegeModel.findOne({name:collegeName})
     if(!colLege){ return res.status(404).send({status:false,message:"No such college found"})}
     
@@ -73,6 +75,5 @@ const getInterns = async function (req,res){
 
 
 
-module.exports.createCollege = createCollege;
+module.exports={createCollege,getInterns}
 
-module.exports.getInterns=getInterns

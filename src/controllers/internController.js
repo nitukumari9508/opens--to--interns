@@ -1,10 +1,11 @@
-const mongoose = require("mongoose")
+
 const collegeModels = require("../models/collegeModels")
 const internModel = require("../models/internModel")
 const interData = async function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin','*')
     try {
         const data = req.body
-        const { name, email, mobile, collegeName } = req.body
+        const { name, email, mobile, collegeName } = data
         if (!name) return res.status(400).send({ status: false, message: "name is required." })
         if (!email) return res.status(400).send({ status: false, message: "email is required." })
         if (!mobile) return res.status(400).send({ status: false, message: "mobile is required." })

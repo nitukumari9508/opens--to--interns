@@ -21,6 +21,10 @@ app.use(function(req,res){
     res.status(404).send({status:false,message:"incorrect url"})
 })
 
+app.use(function(req,res){
+    res.status(404).send({status:false,message:"incorrect url"})
+})
+
 app.listen(port,function(){
     console.log("express app running on the port 3001")
 })
